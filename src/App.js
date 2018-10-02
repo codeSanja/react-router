@@ -7,73 +7,75 @@ import Home from './components/Home';
 import Vitamin from './components/Vitamin';
 import ProductDetails from './components/ProductDetails';
 import Navigation from './components/Navigation';
+import Lost from './components/Lost';
 
 import data from './data/data.json';
 
 class App extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      toggleLogo: true,
-        cards: [],
-    };
-    this.toggleLogo = this.toggleLogo.bind(this);
-    this.openNav = this.openNav.bind(this);
-    this.closeNav = this.closeNav.bind(this);
-  }
+    constructor(props) {
+        super(props);
+        this.state = {
+            toggleLogo: true,
+            cards: [],
+        };
+        this.toggleLogo = this.toggleLogo.bind(this);
+        this.openNav = this.openNav.bind(this);
+        this.closeNav = this.closeNav.bind(this);
+    }
 
-  componentWillMount() {
-    this.setState({ cards: data });
-  }
+    componentWillMount() {
+        this.setState({cards: data});
+    }
 
-  toggleLogo(event) {
-    this.setState((prevState) => ({
-      toggleLogo: !prevState.toggleLogo
-    }));
-  }
+    toggleLogo(event) {
+        this.setState((prevState) => ({
+            toggleLogo: !prevState.toggleLogo
+        }));
+    }
 
-  openNav() {
-    document.getElementById("myNav").style.width = "100%";
-  }
+    openNav() {
+        document.getElementById("myNav").style.width = "100%";
+    }
 
-  closeNav() {
-    document.getElementById("myNav").style.width = "0%";
-  }
+    closeNav() {
+        document.getElementById("myNav").style.width = "0%";
+    }
 
-  render() {
-    const { cards } = this.state;
+    render() {
+        const {cards} = this.state;
 
-    return (
-      <Router>
-          <div className="App">
-            <header className="App-header">
-                <img src={logo}
-                     className={this.state.toggleLogo ? 'static-logo' : 'static-logo animated jello'}
-                     alt="logo"
-                     onMouseEnter={this.toggleLogo}
-                     onMouseLeave={this.toggleLogo}
-                     onClick={this.openNav}
-                />
-                <h1
-                    className={this.state.toggleLogo ? 'menu-hidden' : 'menu animated bounceInDown'}
-                    onClick={this.openNav}
-                >Menu</h1>
-                <Navigation closeNav={this.closeNav} />
-            </header>
-            <Switch>
-              <Route exact path="/" render={() => {
-                return <Home cards={cards} />
-              }} />
-              <Route exact path="/vitamin" component={Vitamin} />
-              <Route exact path="/product/:id" render={(props) => {
-                let cardPosition = props.location.pathname.replace('/product/', '');
-                return <ProductDetails card={cards[cardPosition]}/>
-              }} />
-            </Switch>
-          </div>
-      </Router>
-    );
-  }
+        return (
+            <Router>
+                <div className="App">
+                    <header className="App-header">
+                        <img src={logo}
+                             className={this.state.toggleLogo ? 'static-logo' : 'static-logo animated jello'}
+                             alt="logo"
+                             onMouseEnter={this.toggleLogo}
+                             onMouseLeave={this.toggleLogo}
+                             onClick={this.openNav}
+                        />
+                        <h1
+                            className={this.state.toggleLogo ? 'menu-hidden' : 'menu animated bounceInDown'}
+                            onClick={this.openNav}
+                        >Menu</h1>
+                        <Navigation closeNav={this.closeNav} />
+                    </header>
+                    <Switch>
+                        <Route exact path="/" render={() => {
+                            return <Home cards={cards} />
+                        }} />
+                        <Route exact path="/vitamin" component={Vitamin} />
+                        <Route exact path="/product/:id" render={(props) => {
+                            let cardPosition = props.location.pathname.replace('/product/', '');
+                            return cards[cardPosition] ? <ProductDetails card={cards[cardPosition]} /> : <Lost />
+                        }} />
+                        <Route component={Lost} />
+                    </Switch>
+                </div>
+            </Router>
+        );
+    }
 }
 
 export default App;

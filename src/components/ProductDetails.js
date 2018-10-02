@@ -4,7 +4,7 @@ const ProductDetails = ({ card }) => {
     return (
         <div className={card.animation}>
             <div className="front">
-                <img src="../juice.jpg" alt="Avatar" className="card-image"/>
+                <img src="/juice.jpg" alt="Avatar" className="card-image"/>
                 <div className="container">
                     <h3>{card.title}</h3>
                     <h3><span className="price"> ${card.price}</span></h3>

@@ -1,17 +1,17 @@
 import React from 'react';
 import Card from './Card';
 
-const Home = (props) => {
+const Home = ({ cards }) => {
     return (
         <div className="Grid animated bounceInUp">
           {
-              props.cards.map((card) => (
-              <Card
-                duration={150}
-                key={card.id}
-                card={card}
-              />
-            ))
+              cards.map((card) => (
+                  <Card
+                      duration={150}
+                      key={card.id}
+                      card={card}
+                  />
+              ))
           }
         </div>
     );

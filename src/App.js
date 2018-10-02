@@ -5,6 +5,7 @@ import logo from './logo.png';
 import './App.css';
 import Home from './components/Home';
 import Vitamin from './components/Vitamin';
+import ProductDetails from './components/ProductDetails';
 import Navigation from './components/Navigation';
 
 import data from './data/data.json';
@@ -64,6 +65,10 @@ class App extends Component {
                 return <Home cards={cards} />
               }} />
               <Route exact path="/vitamin" component={Vitamin} />
+              <Route exact path="/product/:id" render={(props) => {
+                let cardPosition = props.location.pathname.replace('/product/', '');
+                return <ProductDetails card={cards[cardPosition]}/>
+              }} />
             </Switch>
           </div>
       </Router>
